@@ -1,0 +1,20 @@
+# Use an official Python runtime as a parent image
+FROM python:3.8-slim
+
+# Set the working directory in the container
+WORKDIR /usr/src/app
+
+# Copy the requirements file into the container at /usr/src/app
+COPY ./src/training/requirements.txt .
+
+RUN mkdir -p ./data
+COPY ./sample_data ./data
+
+# Install any needed packages specified in requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy the rest of the working directory contents into the container at /usr/src/app
+COPY ./training/training.py .
+
+# Run the script
+CMD ["python", "./training.py"]
